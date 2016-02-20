@@ -42,6 +42,8 @@ Build script for Hackathon Web Project
             <fileset dir="WebContent" includes="app/view/ext/jquery.tmpl.forLoop.js"/>
             <fileset dir="WebContent" includes="app/view/ext/jquery.jsonp-2.3.0.js"/>
 	    	
+	    	<fileset dir="WebContent" includes="app/view/ext/three.min.js"/>
+	    	
         	<fileset dir="WebContent" includes="app/lib/*.js"/>
 	    	<fileset dir="WebContent" includes="app/view/ext/*.js"/>
             
@@ -208,6 +210,6 @@ Build script for Hackathon Web Project
     </target>
 
     <target name="build.debug.no.tests" depends="set.version.number,css.concat,js.concat,html.debug.reconstitute,create.debug.output" description="Build debug version with no tests"/>
-    <target name="build.debug.deploy" depends="create.generic.debug.war.file,deploy.debug.war"/>
+    <target name="build.debug.deploy.tomcat" depends="create.generic.debug.war.file,deploy.debug.war"/>
     
 </project>
