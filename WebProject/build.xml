@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Build script for Hackathon Web Project
+-->
+
+<project name="Hackathon Web Project" default="build.debug.test" basedir="./">
+    <description>
+        Hackathon Web Project
+    </description>
+    <property file="local.properties"/>
+    <property file="build.properties"/>
+    <path id="jruby.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="jruby*.jar"/>
+        </fileset>
+    </path>
+    
+    <target name="compile.sass" description="compile sass files to css">
+        <echo message="Compling CSS..."/>
+        <java classname="org.jruby.Main" fork="true" failonerror="true" classpathref="jruby.classpath">
+            <arg line"conf/compass/compile.rb '${basedir)' compile '${basedir}/conf/compass'"/>
+        </java>
+        <echo message="CSS compiled."/>
+    </target>
+    
+    <target "watch.sass" description="watch sass files for changes and auto compile">
+        <echo message="Watching CSS..."/>
+        <java classname="org.jruby.Main" fork="true" failonerror="true" classpathref="jruby.classpath">
+            <arg line="conf/compass/compile.rb '${basedir}' watch '${basedir}/conf/compass'"/>
+        </java>    
+        <echo message="CSS wathced."/>
+    </target>
+    
+    <target name="init.js.list">
+        <union id="js.includes.base">
+            <fileset dir="WebContent" includes="app/namespaceExists.js"/>
+            
+            <fileset dir="WebContent" includes="app/view/ext/jquery.tmpl.js"/>
+            <fileset dir="WebContent" includes="app/view/ext/jquery.tmplPlus.js"/>
+            <fileset dir="WebContent" includes="app/view/ext/jquery.tmpl.forLoop.js"/>
+        	
+        	<fileset dir="WebContent" includes="app/view/ext/${jquery.mobile.version}/${jquery.mobile.js.file}"/>
+            <fileset dir="WebContent" includes="app/view/ext/jquery.jsonp-2.3.0.js"/>
+
+	    	
+        	<fileset dir="WebContent" includes="app/lib/*.js"/>
+	    	<fileset dir="WebContent" includes="app/view/ext/*.js"/>
+            
+            <fileset dir="WebContent" includes="app/*.js"/>
+            <fileset dir="WebContent" includes="app/conf/connectionDetails.js"/>
+			<fileset dir="WebContent" includes="**/controller/**/*.js"/>
+            <fileset dir="WebContent" includes="app/bundles/*.js"/>
+        </union>
+        <union id="js.include">
+            <union refid="js.include.base"/>
+        </union>
+    </target>
+</project>
