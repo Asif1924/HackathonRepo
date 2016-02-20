@@ -18,12 +18,26 @@ HackathonWeb.TwizApp = function(){
         var methodName = "show() ";
         console.log(logPrefix + methodName);
         
+        $screenContainer.show();
         
     }
     
     function createView(){
         var methodName = "createView() ";
         console.log(logPrefix + methodName);
+        
+        $screenContainer.empty();
+        assembleHTML($screenContainer,"#MainPage-template");
+        
+
+    }
+    
+    function assembleHTML($argElement,argTemplateName){
+        var methodName = "assembleHTML() ";
+        console.log(logPrefix + methodName);
+        
+        var html = $(argTemplateName).tmpl();
+        $argElement.prepend(html);
         
     }
     
