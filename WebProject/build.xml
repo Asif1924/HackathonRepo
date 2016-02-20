@@ -63,7 +63,116 @@ Build script for Hackathon Web Project
         <echo message="${build.dir} directory deleted."/>
     </target>
     
+
+	<target name="create.dirs" description="create directories">
+		<echo message="Creating ${minified.dir} directory..."/>
+		<mkdir dir="${minified.dir}"/>
+		<echo message="Creating ${concatenated.dir} directory..."/>
+        <mkdir dir="${concatenated.dir}"/>
+		<echo message="Creating ${production.output.dir} directory..."/>
+        <mkdir dir="${production.output.dir}"/>
+		<echo message="Creating ${production.output.images.dir} directory..."/>
+        <mkdir dir="${production.output.images.dir}"/>        
+		<echo message="Creating ${production.output.dir.war.file} directory..."/>
+		<mkdir dir="${production.output.dir.war.file}"/>
+	</target>
     
+    <target name="init" depends="clean">
+        <echo message="Initializing Build Properties..."/>
+        <mkdir dir="${build.dir}"/>        
+        <property name="packaging.dir" value="${build.dir}/zipped"/>		
+		<property name="debug.output.dir" value="${build.dir}/debug"/>
+		<property name="debug.output.images.dir" value="${build.dir}/debug/app/images"/>
+		<property name="debug.output.jquery.mobile.images.dir" value="${build.dir}/images"/>		
+        <property name="production.output.dir" value="${build.dir}/production"/>
+        <property name="production.output.images.dir" value="${build.dir}/production/app/images"/>
+        <property name="production.output.jquery.mobile.images.dir" value="${build.dir}/images"/>		
+        <property name="local.middleware.dir" value="${local.tomcat.path}/${middleware.name}"/>        
+    	<property name="production.output.dir.war.file" value="${build.dir}/production_war_file"/>
+        <echo message="Build Properties Initialized."/>
+    </target>
+
+    <target name="set.version.number" depends="init,create.dirs">
+        <echo message="Setting Version file... to version ${version.number}"/>
+        <echo file="${version.file}">
+            HackathonWeb.version = "${version.major}.${version.minor}.${version.patch}.${version.buildEnv}.${version.build}";
+        </echo>
+    </target>    
     
+    <target name="product.js.list" depends="init,create.dirs,generate.connection.details,init.js.list">
+        <echo message="Create list of javascript include sfor debug version of index.html..."/>
+        
+        <pathconvert pathsep="" dirsep="/" property="basedir.corrected">
+            <path location="WebContent"/>
+        </pathconvert>
+        <pathconvert pathsep="${line.separator}" dirsep="/" property="jsfiles" refid="js.include">
+        </pathconvert>
+        <echo file="${js.include.files.debug">
+            ${jsfiles}
+        </echo>
+        <replace token="${basedir.corrected}/" value="" file="${js.include.files.debug}"/>        
+        <replaceregexp match="^(.*)$" replace="${js.script.wrap.expression}" byline="true" file="${js.include.files.debug}"/>
+		<echo message="List of Javascript includes created."/>
+    </target>>
     
+    <target name="product.css.list">
+        <echo message="Creating list of CSS includes for debug version of index.html..."/>
+        <echo file="${lib.dir}/${css.include.files.debug}">
+            &lt;link rel="stylesheet" type="text/css" href="app/view/ext/${jquery.mobile.version}/${jquery.mobile.css.file}"/&gt;
+            &lt;link rel="stylesheet" type="text/css" href="app/view/css/${css.filename}"/&gt;
+        </echo>
+        <echo message="List of CSS includes created."/>
+    </target>
+
+    <target name="css.concat" depends="init,create.dirs,compile.sass">
+        <echo message="Concatenating CSS files..."/>
+        <echo message="Assing /app/view/css/${css.filename}"/>
+        <concat outputencoding="UTF8" encoding="UTF8" fixlastline="true" destfile="${concatenated.css.file}}">
+            <fileset dir="WebContent" includes="**/app/view/ext/${css.filename}"/>
+        </concat>
+    </target>
+    
+    <target name="html.debug.reconstitute" depends="init,create.dirs,create.index.title,produce.css.list,produce.js.list" description="Append title to debug index.html">
+        <echo message="Reconstituting debug index.html..."/>
+        <concat outputencoding="UTF8" encoding="UTF8" fixlastline="true" destfile="${index.html.file.debug}">
+            <fileset dir="${lib.dir}" includes="**/index.part1.html"/>
+            <fileset dir="${lib.dir}" includes="**/${css.includefiles.debug}"/>
+            <fileset dir="${lib.dir}" includes="**/index.debug.includes.html"/>
+            <fileset dir="${basedir}/WebContent/app/view/templates" includes="**/*.html"/>
+            <fileset dir="${lib.dir}" includes="**/index.title.html"/>
+            <fileset dir="${lib.dir}" includes="**/index.part2.html"/>
+        </concat>
+        <echo message="Reconstituted debug index.html."/>
+    </target>
+
+    <target name="create.debug.output">
+        <echo message="Copying Debug files to output folder..."/>
+        <copy todir="${debug.output.dir}">
+            <fileset dir="WebContent">
+                <include name="**/*.html"/>
+                <include name="**/*.ico"/>
+                <include name="**/*.png"/>
+                <include name="**/*.gif"/>
+                <include name="**/*.jpg"/>
+                <include name="**/*.js"/>
+                <include name="**/*.css"/>
+            </fileset>
+        </copy>
+        <echo message="Debug files copied."/>
+    </target>
+
+    <target name="create.generic.debug.war.file">
+        <echo message="Creating Generic Debug WAR File..."/>
+        <mkdir dir="${debug.output.dir.war.file}/temporary"/>
+        <copy todir="${debug.output.dir.war.file}/temporary">
+            <fileset dir="${build.dir}/debug">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+        <jar jarfile="${debug.output.dir.war.file}/${thisWebapp.name}.war" basedir="${debug.output.dir.war.file}/temporary"></jar>
+        <delete dir="${debug.output.dir.war.file}/temporary}"/>
+    </target>
+
+    <target name="build.debug.no.tests" depends="set.version.number,css.concat,js.concat,html.debug.reconstitute,create.debug.output" description="Build debug version with no tests"/>
+
 </project>
