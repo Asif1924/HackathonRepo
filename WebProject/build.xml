@@ -118,7 +118,7 @@ Build script for Hackathon Web Project
         </pathconvert>
         <pathconvert pathsep="${line.separator}" dirsep="/" property="jsfiles" refid="js.include">
         </pathconvert>
-        <echo file="${js.include.files.debug">
+        <echo file="${js.include.files.debug}">
             ${jsfiles}
         </echo>
         <replace token="${basedir.corrected}/" value="" file="${js.include.files.debug}"/>        
