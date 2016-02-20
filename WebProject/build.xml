@@ -99,7 +99,7 @@ Build script for Hackathon Web Project
         </echo>
     </target>    
     
-    <target name="product.js.list" depends="init,create.dirs,generate.connection.details,init.js.list">
+    <target name="produce.js.list" depends="init,create.dirs,generate.connection.details,init.js.list">
         <echo message="Create list of javascript include sfor debug version of index.html..."/>
         
         <pathconvert pathsep="" dirsep="/" property="basedir.corrected">
@@ -113,9 +113,9 @@ Build script for Hackathon Web Project
         <replace token="${basedir.corrected}/" value="" file="${js.include.files.debug}"/>        
         <replaceregexp match="^(.*)$" replace="${js.script.wrap.expression}" byline="true" file="${js.include.files.debug}"/>
 		<echo message="List of Javascript includes created."/>
-    </target>
+    </target>>
     
-    <target name="product.css.list">
+    <target name="produce.css.list">
         <echo message="Creating list of CSS includes for debug version of index.html..."/>
         <echo file="${lib.dir}/${css.include.files.debug}">
             &lt;link rel="stylesheet" type="text/css" href="app/view/ext/${jquery.mobile.version}/${jquery.mobile.css.file}"/&gt;
@@ -130,6 +130,14 @@ Build script for Hackathon Web Project
         <concat outputencoding="UTF8" encoding="UTF8" fixlastline="true" destfile="${concatenated.css.file}}">
             <fileset dir="WebContent" includes="**/app/view/ext/${css.filename}"/>
         </concat>
+    </target>
+    
+    <target name="create.index.title">
+        <echo message="Adding WebApp title to index.html..."/>
+        <echo file="${lib.dir}/index.title.html">
+            &lt;title&gt;${page.title}&lt;/title&gt;
+        </echo>
+        <echo message="WebApp title added to index.html."/>
     </target>
     
     <target name="html.debug.reconstitute" depends="init,create.dirs,create.index.title,produce.css.list,produce.js.list" description="Append title to debug index.html">
