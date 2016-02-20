@@ -19,12 +19,12 @@ Build script for Hackathon Web Project
     <target name="compile.sass" description="compile sass files to css">
         <echo message="Compling CSS..."/>
         <java classname="org.jruby.Main" fork="true" failonerror="true" classpathref="jruby.classpath">
-            <arg line"conf/compass/compile.rb '${basedir)' compile '${basedir}/conf/compass'"/>
+            <arg line="conf/compass/compile.rb '${basedir)' compile '${basedir}/conf/compass'"/>
         </java>
         <echo message="CSS compiled."/>
     </target>
     
-    <target "watch.sass" description="watch sass files for changes and auto compile">
+    <target name="watch.sass" description="watch sass files for changes and auto compile">
         <echo message="Watching CSS..."/>
         <java classname="org.jruby.Main" fork="true" failonerror="true" classpathref="jruby.classpath">
             <arg line="conf/compass/compile.rb '${basedir}' watch '${basedir}/conf/compass'"/>
