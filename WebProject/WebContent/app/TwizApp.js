@@ -1,7 +1,7 @@
 ensureNamespaceExists();
 
-HackathonWeb.WebApp = function(){
-    var logPrefix = "[HackathonWeb.WebApp]:";
+HackathonWeb.TwizApp = function(){
+    var logPrefix = "[HackathonWeb.TwizApp]:";
     
     this.init = function(){
         var methodName = "init() ";
