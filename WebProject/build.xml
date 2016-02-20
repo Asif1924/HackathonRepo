@@ -186,7 +186,7 @@ Build script for Hackathon Web Project
         <echo message="Debug files copied."/>
     </target>
 
-    <target name="create.generic.debug.war.file">
+    <target name="create.generic.debug.war.file" depends="build.debug.no.tests" description="Create generic war file">
         <echo message="Creating Generic Debug WAR File..."/>
         <mkdir dir="${debug.output.dir.war.file}/temporary"/>
         <copy todir="${debug.output.dir.war.file}/temporary">
@@ -198,6 +198,16 @@ Build script for Hackathon Web Project
         <delete dir="${debug.output.dir.war.file}/temporary}"/>
     </target>
 
-    <target name="build.debug.no.tests" depends="set.version.number,css.concat,js.concat,html.debug.reconstitute,create.debug.output" description="Build debug version with no tests"/>
+    <target name="deploy.debug.war" description="Deploy Debug WAR File to App Server">
+        <echo message="Deploying ${debug.output.dir.war.file}/${thisWebapp.name}.war to ${local.tomcat.path}/webapps"/>
+        <copy overwrite="true" todir="${local.tomcat.path}/webapps">
+            <fileset dir="${debug.output.dir.war.file}">
+                <include name="${thisWebapp.name}.war"/>
+            </fileset>
+        </copy>
+    </target>
 
+    <target name="build.debug.no.tests" depends="set.version.number,css.concat,js.concat,html.debug.reconstitute,create.debug.output" description="Build debug version with no tests"/>
+    <target name="build.debug.deploy" depends="create.generic.debug.war.file,deploy.debug.war"/>
+    
 </project>
