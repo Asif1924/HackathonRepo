@@ -56,4 +56,14 @@ Build script for Hackathon Web Project
             <union refid="js.include.base"/>
         </union>
     </target>
+    
+    <target name="clean" description="clean up">
+        <echo message="Deleting ${build.dir} directory..."/>
+        <delete dir="${build.dir}"/>
+        <echo message="${build.dir} directory deleted."/>
+    </target>
+    
+    
+    
+    
 </project>
