@@ -33,7 +33,7 @@ Build script for Hackathon Web Project
     </target>
     
     <target name="init.js.list">
-        <union id="js.includes.base">
+        <union id="js.include.base">
             <fileset dir="WebContent" includes="app/namespaceExists.js"/>
             
             <fileset dir="WebContent" includes="app/view/ext/jquery.tmpl.js"/>
