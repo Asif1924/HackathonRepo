@@ -124,7 +124,7 @@ Build script for Hackathon Web Project
         <replace token="${basedir.corrected}/" value="" file="${js.include.files.debug}"/>        
         <replaceregexp match="^(.*)$" replace="${js.script.wrap.expression}" byline="true" file="${js.include.files.debug}"/>
 		<echo message="List of Javascript includes created."/>
-    </target>>
+    </target>
     
     <target name="produce.css.list">
         <echo message="Creating list of CSS includes for debug version of index.html..."/>
