@@ -143,6 +143,14 @@ Build script for Hackathon Web Project
         </concat>
     </target>
     
+    <target name="js.concat" depends="init,create.dirs,produce.js.list">
+        <echo message="Concatenating Javascript files..."/>
+        <concat outputencoding="UTF8" encoding="UTF8" fixlastline="true" destfile="${concatenated.js.file}">
+            <union refid="js.include"/>
+        </concat>
+        <echo message="Javascript files concatenated."/>
+    </target>
+    
     <target name="create.index.title">
         <echo message="Adding WebApp title to index.html..."/>
         <echo file="${lib.dir}/index.title.html">
