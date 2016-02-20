@@ -99,6 +99,17 @@ Build script for Hackathon Web Project
         </echo>
     </target>    
     
+    <target name="generate.connection.details">
+        <echo message="Generating global connection details file..."/>
+        <echo file="WebContent/app/conf/connectionDetails.js">
+            ensureNamespaceExists();
+            HackathonWeb.physcialserverURL  = "${physicalserver.name}";
+            HackathonWeb.thisWebappName     = "${thisWebapp.name}";
+            HackathonWeb.middlewareName     = "${middleware.name}";
+        </echo>
+        <echo message="Global connection details file generated."/>
+    </target>
+    
     <target name="produce.js.list" depends="init,create.dirs,generate.connection.details,init.js.list">
         <echo message="Create list of javascript include sfor debug version of index.html..."/>
         
@@ -113,7 +124,7 @@ Build script for Hackathon Web Project
         <replace token="${basedir.corrected}/" value="" file="${js.include.files.debug}"/>        
         <replaceregexp match="^(.*)$" replace="${js.script.wrap.expression}" byline="true" file="${js.include.files.debug}"/>
 		<echo message="List of Javascript includes created."/>
-    </target>
+    </target>>
     
     <target name="produce.css.list">
         <echo message="Creating list of CSS includes for debug version of index.html..."/>
