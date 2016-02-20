@@ -36,13 +36,11 @@ Build script for Hackathon Web Project
         <union id="js.include.base">
             <fileset dir="WebContent" includes="app/namespaceExists.js"/>
             
+            <fileset dir="WebContent" includes="app/view/ext/jquery-1.7.1.js"/>
             <fileset dir="WebContent" includes="app/view/ext/jquery.tmpl.js"/>
             <fileset dir="WebContent" includes="app/view/ext/jquery.tmplPlus.js"/>
             <fileset dir="WebContent" includes="app/view/ext/jquery.tmpl.forLoop.js"/>
-        	
-        	<fileset dir="WebContent" includes="app/view/ext/${jquery.mobile.version}/${jquery.mobile.js.file}"/>
             <fileset dir="WebContent" includes="app/view/ext/jquery.jsonp-2.3.0.js"/>
-
 	    	
         	<fileset dir="WebContent" includes="app/lib/*.js"/>
 	    	<fileset dir="WebContent" includes="app/view/ext/*.js"/>
