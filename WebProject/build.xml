@@ -209,7 +209,18 @@ Build script for Hackathon Web Project
         </copy>
     </target>
 
+    <target name="copy.debug.web.apache" description="Copy Debug Web Files to Apache Server">
+        <echo message="Copying ${debug.output.dir}/* to ${local.apache.path}"/>
+        <copy overwrite="true" todir="${local.apache.path}">
+            <fileset dir="${debug.output.dir}">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+    </target>
+
+
     <target name="build.debug.no.tests" depends="set.version.number,css.concat,js.concat,html.debug.reconstitute,create.debug.output" description="Build debug version with no tests"/>
     <target name="build.debug.deploy.tomcat" depends="create.generic.debug.war.file,deploy.debug.war"/>
+    <target name="build.debug.copy.apache" depends="build.debug.no.tests,copy.debug.web.apache"/>
     
 </project>
