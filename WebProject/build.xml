@@ -129,7 +129,6 @@ Build script for Hackathon Web Project
     <target name="produce.css.list">
         <echo message="Creating list of CSS includes for debug version of index.html..."/>
         <echo file="${lib.dir}/${css.include.files.debug}">
-            &lt;link rel="stylesheet" type="text/css" href="app/view/ext/${jquery.mobile.version}/${jquery.mobile.css.file}"/&gt;
             &lt;link rel="stylesheet" type="text/css" href="app/view/css/${css.filename}"/&gt;
         </echo>
         <echo message="List of CSS includes created."/>

@@ -1,3 +1,6 @@
+@import "_mixins";
+@import "_buttons";
+
 .ScreenLayoutFullWidth {
     
     body { margin: 0; }
@@ -6,3 +9,10 @@
 	padding-left: 0px;
 	padding-right: 0px;
 }
+
+
+.form-row {
+    width: 50%;
+    float: left;
+}
+

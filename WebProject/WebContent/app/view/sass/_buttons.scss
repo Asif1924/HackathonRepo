@@ -1,0 +1,43 @@
+
+.button {
+  display: table-cell;
+  zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+  *display: inline;
+  vertical-align: middle;
+  margin: 0 2px;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font: 14px/100% Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  padding: .5em 0em .5em;
+  text-shadow: 0 1px 1px rgba(0,0,0,.3);
+
+  @include border-radius(.25em);
+
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  height: 72px;
+  width: 640px;
+}
+
+#twizButton{
+    margin-top: 15px;
+    width: 320px;
+    text-transform: capitalize;
+    padding: 0px !important;
+    color: blue;
+    
+    span{
+        font-size: 25px;
+        line-height: 44px;
+    }
+}
+
+.blueflat {
+  color: #fadedd;
+  border: solid 1px rgb(34, 12, 152);
+  background: rgb(24, 2, 142);
+}
