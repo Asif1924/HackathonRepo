@@ -21,12 +21,30 @@ HackathonWeb.IntegrationController = function(){
         }
 
 		var descriptor = { 
-                            url         : "https://api.twitter.com/1.1/search/tweets.json?" + $.param(searchTerm),
-                            dataType    : 'jsonp' 
+            url         : "https://api.twitter.com/1.1/search/tweets.json?" + $.param(searchTerm),
+            dataType    : 'jsonp' 
 		};
 
 		AJAXRequest( descriptor, argSuccessCB, argFailCB, $.noop, $.noop, $.noop);
         
+    }
+    
+    this.getWeatherDataByCityID = function( argCityID, argSuccessCB, argFailCB ){
+        //http://api.openweathermap.org/data/2.5/weather?id=2172797&appid=44db6a862fba0b067b1930da0d769e98
+        var methodName = 'getWeatherDataByCityID() ';
+		console.log(logPrefix + methodName);
+
+        var params = {
+            id      :   argCityID,
+            appid   :   "44db6a862fba0b067b1930da0d769e98"
+        }
+		
+		var descriptor = { 
+            url         : "http://api.openweathermap.org/data/2.5/weather?" + $.param(params),
+            dataType    : 'json' 
+		};
+	
+	    AJAXRequest( descriptor, argSuccessCB, argFailCB, $.noop, $.noop, $.noop);	
     }
 
     function AJAXRequest( argDescriptor, argSuccessCB, argFailCB, argBeforeSendCB, argCompleteCB, argOfflineCB ){
@@ -34,8 +52,9 @@ HackathonWeb.IntegrationController = function(){
 		console.log(logPrefix + methodName);
 		
 		$.ajax({
+		    type            :   "GET",
 		    url             :   argDescriptor.url,
-		    contentType     :   "application/json; charset=utf-8",
+		    //contentType     :   "application/json; charset=utf-8",
 		    dataType        :   argDescriptor.dataType,
 		    timeout         :   ajaxRequestTimeout,
 		    success         :   argSuccessCB,

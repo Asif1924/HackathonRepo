@@ -90,18 +90,19 @@ HackathonWeb.WebApp = function(){
         
         var integration = new HackathonWeb.IntegrationController();
         integration.init();
-        integration.searchTwitter(argSearchValue,twitterSuccess);
+        //integration.searchTwitter(argSearchValue,twitterSuccess);
+        integration.getWeatherDataByCityID(argSearchValue,weatherSuccess,weatherFail)
     }
     
-    function twitterSuccess( argResult ){
-        var methodName = "twitterSuccess() ";
+    function weatherSuccess( argResult ){
+        var methodName = "weatherSuccess() ";
         console.log(logPrefix + methodName);
         
         console.log("---" + argResult);
     }
     
-    function twitterFail( argResult ){
-        var methodName = "twitterFail() ";
+    function weatherFail( argResult ){
+        var methodName = "weatherFail() ";
         console.log(logPrefix + methodName);
         
         console.log("---" + argResult);
