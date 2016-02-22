@@ -50,6 +50,7 @@ Build script for Hackathon Web Project
             <fileset dir="WebContent" includes="app/*.js"/>
             <fileset dir="WebContent" includes="app/conf/connectionDetails.js"/>
 			<fileset dir="WebContent" includes="**/controller/**/*.js"/>
+			<fileset dir="WebContent" includes="**/models/**/*.js"/>
             <fileset dir="WebContent" includes="app/bundles/*.js"/>
         </union>
         <union id="js.include">
@@ -106,6 +107,7 @@ Build script for Hackathon Web Project
             HackathonWeb.physcialserverURL  = "${physicalserver.name}";
             HackathonWeb.thisWebappName     = "${thisWebapp.name}";
             HackathonWeb.middlewareName     = "${middleware.name}";
+            HackathonWeb.weatherAPIKey      = "${openweathermap.key}";
         </echo>
         <echo message="Global connection details file generated."/>
     </target>

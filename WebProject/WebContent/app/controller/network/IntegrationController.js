@@ -36,7 +36,8 @@ HackathonWeb.IntegrationController = function(){
 
         var params = {
             id      :   argCityID,
-            appid   :   "44db6a862fba0b067b1930da0d769e98"
+            //appid   :   "44db6a862fba0b067b1930da0d769e98"
+            appid   :   HackathonWeb.weatherAPIKey
         }
 		
 		var descriptor = { 
@@ -48,6 +49,25 @@ HackathonWeb.IntegrationController = function(){
     }
     
     //http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=44db6a862fba0b067b1930da0d769e98
+    this.getWeatherDataByLatLong = function( argLat, argLong, argSuccessCB, argFailCB ){
+        ///http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=44db6a862fba0b067b1930da0d769e98
+        var methodName = 'getWeatherDataByLatLong() ';
+		console.log(logPrefix + methodName);
+
+        var params = {
+            lat     :   argLat,
+            lon     :   argLong,
+            //appid   :   "44db6a862fba0b067b1930da0d769e98"
+            appid   :   HackathonWeb.weatherAPIKey
+        }
+		
+		var descriptor = { 
+            url         : "http://api.openweathermap.org/data/2.5/weather?" + $.param(params),
+            dataType    : 'json' 
+		};
+	
+	    AJAXRequest( descriptor, argSuccessCB, argFailCB, $.noop, $.noop, $.noop);	
+    }
 
     function AJAXRequest( argDescriptor, argSuccessCB, argFailCB, argBeforeSendCB, argCompleteCB, argOfflineCB ){
         var methodName = 'AJAXrequest() ';

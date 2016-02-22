@@ -8,9 +8,15 @@ HackathonWeb.WebApp = function(){
     var renderHeight = 768;
     
     var controlRefs = {
-        searchButton    : "#twizButton",
-        searchField     : "#searchField"
+        searchButton    :   "#twizButton",
+        searchField     :   "#searchField",
+        
+        latField        :   "#latField",
+        longField       :   "#longField",
+        latlongButton   :   "#latlongButton"
     };
+    
+    var weatherkey = HackathonWeb.weatherAPIKey;
     
     
     this.init = function(){
@@ -69,8 +75,24 @@ HackathonWeb.WebApp = function(){
         
         $screenContainer.empty();
         assembleHTML($screenContainer,"#MainPage-template");
-        
 
+    }
+    
+    function bindEvents(){
+        var methodName = "bindEvents() ";
+        console.log(logPrefix + methodName);
+        
+        $(controlRefs.searchButton).click(function(){
+            searchButtonClick($(controlRefs.searchField).val());
+        });
+        
+        $(controlRefs.latlongButton).click(function(){
+            latlongButtonClick(
+                $(controlRefs.latField).val(),
+                $(controlRefs.longField).val()
+            );
+        });
+        
     }
     
     function assembleHTML($argElement,argTemplateName){
@@ -82,6 +104,18 @@ HackathonWeb.WebApp = function(){
         
     }
     
+    function latlongButtonClick( argLat, argLong ){
+        var methodName = "latlongButtonClick() ";
+        console.log(logPrefix + methodName);
+        
+        console.log("---" + argLat + ", " + argLong );
+        console.log("---weatherKey:" + weatherkey );
+        
+        var integration = new HackathonWeb.IntegrationController();
+        integration.init();
+        integration.getWeatherDataByLatLong(argLat,argLong,weatherSuccess,weatherFail)
+    }    
+    
     function searchButtonClick( argSearchValue ){
         var methodName = "searchButtonClick() ";
         console.log(logPrefix + methodName);
@@ -90,7 +124,6 @@ HackathonWeb.WebApp = function(){
         
         var integration = new HackathonWeb.IntegrationController();
         integration.init();
-        //integration.searchTwitter(argSearchValue,twitterSuccess);
         integration.getWeatherDataByCityID(argSearchValue,weatherSuccess,weatherFail)
     }
     
@@ -109,15 +142,6 @@ HackathonWeb.WebApp = function(){
         
     }
     
-    function bindEvents(){
-        var methodName = "bindEvents() ";
-        console.log(logPrefix + methodName);
-        
-        $(controlRefs.searchButton).click(function(){
-            searchButtonClick($(controlRefs.searchField).val());
-        });
-        
-    }
     
     
 }
