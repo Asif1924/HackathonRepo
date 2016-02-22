@@ -4,21 +4,68 @@ HackathonWeb.WebApp = function(){
     var logPrefix = "[HackathonWeb.WebApp]:";
     var $screenContainer = $("#MainPage");
     
+    var $weatherViewContainer = $("#weatherView");
+    
     var renderWidth = 1024;
     var renderHeight = 768;
     
+
     var controlRefs = {
         searchButton    :   "#twizButton",
         searchField     :   "#searchField",
         
         latField        :   "#latField",
         longField       :   "#longField",
-        latlongButton   :   "#latlongButton"
+        latlongButton   :   "#latlongButton",
+        
+        latitudeLabel   :   "#latitudeLabel",
+        longitudeLabel  :   "#longitudeLabel",
+        cityLabel       :   "#cityLabel",
+        cityField       :   "#cityField"
     };
     
     var weatherkey = HackathonWeb.weatherAPIKey;
     
+    var weatherPoller;
+    var randLat = 0;
+    var randLong = 0;
+
+    function startPollingWeather() {
+        var methodName = "startPollingWeather() ";
+        console.log(logPrefix + methodName);
+
+        weatherPoller = setInterval(checkWeather, 3000);
+    }
     
+    function checkWeather() {
+        var methodName = "checkWeather() ";
+        console.log(logPrefix + methodName);
+
+        randLat=getRandomLatitude();
+        randLong=getRandomLongitude();
+        
+        $(controlRefs.latField).val(randLat);
+        $(controlRefs.longField).val(randLong);
+        
+        //$(controlRefs.latitudeLabel).text(randLat);
+        //$(controlRefs.longitudeLabel).text(randLong);
+        
+        getWeatherForLatLong(randLat,randLong);
+
+    }    
+    
+    function getRandomInRange(from, to, fixed) {
+        return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+    }
+    
+    function getRandomLatitude(){
+        return getRandomInRange(-165,165,3);
+    }
+    
+    function getRandomLongitude(){
+        return getRandomInRange(-75,75,3);
+    }
+
     this.init = function(){
         var methodName = "init() ";
         console.log(logPrefix + methodName);
@@ -34,6 +81,9 @@ HackathonWeb.WebApp = function(){
         $screenContainer.show();
         
         start3D();
+        
+       startPollingWeather();
+        
     }
     
     function start3D(){
@@ -87,7 +137,7 @@ HackathonWeb.WebApp = function(){
         });
         
         $(controlRefs.latlongButton).click(function(){
-            latlongButtonClick(
+            getWeatherForLatLong(
                 $(controlRefs.latField).val(),
                 $(controlRefs.longField).val()
             );
@@ -104,7 +154,7 @@ HackathonWeb.WebApp = function(){
         
     }
     
-    function latlongButtonClick( argLat, argLong ){
+    function getWeatherForLatLong( argLat, argLong ){
         var methodName = "latlongButtonClick() ";
         console.log(logPrefix + methodName);
         
@@ -131,7 +181,15 @@ HackathonWeb.WebApp = function(){
         var methodName = "weatherSuccess() ";
         console.log(logPrefix + methodName);
         
-        console.log("---" + argResult);
+        //{"cod":"404","message":"Error: Not found city"}
+        //{"coord":{"lon":-33,"lat":-56},"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10n"}],"base":"cmc stations","main":{"temp":276.408,"pressure":993.61,"humidity":92,"temp_min":276.408,"temp_max":276.408,"sea_level":993.75,"grnd_level":993.61},"wind":{"speed":17.83,"deg":272.506},"rain":{"3h":0.59},"clouds":{"all":92},"dt":1456110810,"sys":{"message":0.0042,"country":"GS","sunrise":1456125398,"sunset":1456176781},"id":3474415,"name":"South Georgia and the South Sandwich Islands","cod":200}
+        console.log("---" + argResult.cod);
+        $(controlRefs.cityField).val("Not a city");
+        if(argResult.cod===200){
+            console.log("---" + argResult.name);
+            $(controlRefs.cityField).val(argResult.name);
+        }
+        
     }
     
     function weatherFail( argResult ){

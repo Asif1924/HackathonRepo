@@ -30,7 +30,6 @@ HackathonWeb.IntegrationController = function(){
     }
     
     this.getWeatherDataByCityID = function( argCityID, argSuccessCB, argFailCB ){
-        //http://api.openweathermap.org/data/2.5/weather?id=2172797&appid=44db6a862fba0b067b1930da0d769e98
         var methodName = 'getWeatherDataByCityID() ';
 		console.log(logPrefix + methodName);
 
@@ -48,9 +47,7 @@ HackathonWeb.IntegrationController = function(){
 	    AJAXRequest( descriptor, argSuccessCB, argFailCB, $.noop, $.noop, $.noop);	
     }
     
-    //http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=44db6a862fba0b067b1930da0d769e98
     this.getWeatherDataByLatLong = function( argLat, argLong, argSuccessCB, argFailCB ){
-        ///http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=44db6a862fba0b067b1930da0d769e98
         var methodName = 'getWeatherDataByLatLong() ';
 		console.log(logPrefix + methodName);
 

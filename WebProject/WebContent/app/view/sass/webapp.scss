@@ -4,13 +4,25 @@
 
 .ScreenLayoutFullWidth {
     
-    body { margin: 0; }
 	canvas { width: 100%; height: 100% }
 			
 	padding-left: 0px;
 	padding-right: 0px;
 }
 
+#MainPageStyle{
+    background-color: #FFFFFF;
+}
+
+.WeatherViewLayout{
+    width:250px; 
+    height: 250px;
+    canvas { width: 50%; height: 50% }
+}
+
+.seeThrough{
+	opacity: 0.4;
+}
 
 .form-row {
     width: 50%;
@@ -20,7 +32,8 @@
 
 body {
   font-family: 'Open Sans', 'sans-serif';
-  background-image: url(http://benague.ca/files/pw_pattern.png);
+  margin : 0;
+  
 }
 
 
@@ -38,7 +51,6 @@ h1 {
   -webkit-transition: .3s;
   -moz-transition: .3s;
   -o-transition: .3s;
-  cursor: url(http://cur.cursors-4u.net/symbols/sym-1/sym46.cur), auto;
 }
 
 .link:hover {

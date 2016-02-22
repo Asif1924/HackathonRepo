@@ -14,7 +14,7 @@
         </div>
 
         <div class="form-row">
-            <label for="searchField">Get weather forecast for this Latitude and Longitude:</label>
+            <label for="latField">Getting weather forecast for this Latitude and Longitude:</label>
             
             <input id="latField" type="text" name="latField"/>
             
@@ -23,6 +23,24 @@
             <input id="latlongButton" name="latlongButton" value="Whats the weather like?" type="button"/>
             
         </div>
+        
+        <div class="form-row">
+            <label for="cityField">Name of City:</label>
+            <input id="cityField" type="text" name="cityField"/>
+        </div>        
+        
+        <div id="weatherView" class="WeatherViewLayout seeThrough">
+        </div>
+        
+        <!--
+        <div id="latitudeDiv" style="z-index:5;position:fixed; top: 50px; left: 15px; width:230px; height: 50px; border:none;border-color:black;background-color:transparent; background-size:cover" >
+            <font color="#FFFFFF"><span id="latitudeLabel">Latitude</span></font>
+        </div>
+
+        <div id="longitudeDiv" style="z-index:5;position:fixed; top: 50px; left: 100px; width:230px; height: 50px; border:none;border-color:black;background-color:transparent; background-size:cover" >
+            <font color="#FFFFFF"><span id="longitudeLabel">Longitude</span></font>
+        </div>
+        //-->
 
 
     </div>
