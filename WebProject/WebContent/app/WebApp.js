@@ -204,11 +204,23 @@ HackathonWeb.WebApp = function(){
         //{"cod":"404","message":"Error: Not found city"}
         //{"coord":{"lon":-33,"lat":-56},"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10n"}],"base":"cmc stations","main":{"temp":276.408,"pressure":993.61,"humidity":92,"temp_min":276.408,"temp_max":276.408,"sea_level":993.75,"grnd_level":993.61},"wind":{"speed":17.83,"deg":272.506},"rain":{"3h":0.59},"clouds":{"all":92},"dt":1456110810,"sys":{"message":0.0042,"country":"GS","sunrise":1456125398,"sunset":1456176781},"id":3474415,"name":"South Georgia and the South Sandwich Islands","cod":200}
         console.log("---" + argResult.cod);
+        
         $(controlRefs.cityField).val("Not a city");
+        renderIncX = 0;
+        renderIncY = 0;
+		some3DObject.rotation.x = renderIncX;
+		some3DObject.rotation.y = renderIncY;
+        scaleObject(1,1,1);
+
         if(argResult.cod===200){
             console.log("---Name:" + argResult.name);
             console.log("---Lat:" + argResult.coord.lat);
             console.log("---Lon:" + argResult.coord.lon);
+            
+            console.log("---temp:" + argResult.main.temp);
+            console.log("---pressure:" + argResult.main.pressure);
+            console.log("---humidity:" + argResult.main.humidity);
+            
             console.log("---renderIncX:" + renderIncX);
             console.log("---renderIncY:" + renderIncY);
             
@@ -216,10 +228,17 @@ HackathonWeb.WebApp = function(){
             renderIncY = argResult.coord.lon;
             
             $(controlRefs.cityField).val(argResult.name);
-            render();
             //render(argResult.coord.lat,argResult.coord.lon);
+            
+            scaleObject(argResult.main.temp,argResult.main.pressure,argResult.main.humidity)
         }
-        
+        //render();
+    }
+    
+    function scaleObject( argX, argY, argZ ){
+        some3DObject.scale.x = argX/300;
+        some3DObject.scale.y = argY/1000;
+        some3DObject.scale.z = argZ/100;
     }
     
     function weatherFail( argResult ){
