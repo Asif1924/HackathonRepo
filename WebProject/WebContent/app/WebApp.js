@@ -29,7 +29,14 @@ HackathonWeb.WebApp = function(){
     var weatherPoller;
     var randLat = 0;
     var randLong = 0;
-
+    
+    var cube = null;
+    var some3DObject = null;
+	var scene = new THREE.Scene();
+	//var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+	var camera = new THREE.PerspectiveCamera( 75, renderWidth/renderHeight, 0.1, 1000 );
+	var renderer = new THREE.WebGLRenderer();
+	
     function startPollingWeather() {
         var methodName = "startPollingWeather() ";
         console.log(logPrefix + methodName);
@@ -86,37 +93,36 @@ HackathonWeb.WebApp = function(){
         
     }
     
-    function start3D(){
-			var scene = new THREE.Scene();
-			//var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-			
-			var camera = new THREE.PerspectiveCamera( 75, renderWidth/renderHeight, 0.1, 1000 );
+	var render = function () {
+		requestAnimationFrame( render );
 
-			var renderer = new THREE.WebGLRenderer();
+		cube.rotation.x += 0.1;
+		cube.rotation.y += 0.1;
+
+		renderer.render(scene, camera);
+	};    
+    
+    function start3D(){
+
 			//renderer.setSize( window.innerWidth, window.innerHeight );
 			renderer.setSize( renderWidth, renderHeight );
 
 			//document.body.appendChild( renderer.domElement );
             $screenContainer.append( renderer.domElement );
-            
-            
-			var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-			var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			var cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
+
+			//scene.add( cube );
+			createObject();
+			scene.add( some3DObject );
 
 			camera.position.z = 5;
 
-			var render = function () {
-				requestAnimationFrame( render );
-
-				cube.rotation.x += 0.1;
-				cube.rotation.y += 0.1;
-
-				renderer.render(scene, camera);
-			};
-
 			render();        
+    }
+    
+    function createObject(){
+		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+		some3DObject = new THREE.Mesh( geometry, material );
     }
     
     function createView(){
