@@ -6,9 +6,6 @@ HackathonWeb.WebApp = function(){
     
     var $weatherViewContainer = $("#weatherView");
     
-    var renderWidth = 1024;
-    var renderHeight = 768;
-    
 
     var controlRefs = {
         searchButton    :   "#twizButton",
@@ -29,13 +26,19 @@ HackathonWeb.WebApp = function(){
     var weatherPoller;
     var randLat = 0;
     var randLong = 0;
-    
+
+    var renderWidth = 1024;
+    var renderHeight = 768;
+
     var cube = null;
     var some3DObject = null;
 	var scene = new THREE.Scene();
 	//var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 	var camera = new THREE.PerspectiveCamera( 75, renderWidth/renderHeight, 0.1, 1000 );
 	var renderer = new THREE.WebGLRenderer();
+	
+	var renderIncX = 0.1;
+	var renderIncY = 0.1;
 	
     function startPollingWeather() {
         var methodName = "startPollingWeather() ";
@@ -93,38 +96,49 @@ HackathonWeb.WebApp = function(){
         
     }
     
+    function createObject(){
+        var methodName = "createObject() ";
+        console.log(logPrefix + methodName);
+
+		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+		some3DObject = new THREE.Mesh( geometry, material );
+    }    
+    
 	var render = function () {
+        var methodName = "render() ";
+        console.log(logPrefix + methodName);
+
 		requestAnimationFrame( render );
 
-		some3DObject.rotation.x += 0.1;
-		some3DObject.rotation.y += 0.1;
+		//some3DObject.rotation.x += 0.1;
+		//some3DObject.rotation.y += 0.1;
+		some3DObject.rotation.x += renderIncX;
+		some3DObject.rotation.y += renderIncY;
 
 		renderer.render(scene, camera);
 	};    
     
     function start3D(){
+        var methodName = "start3D() ";
+        console.log(logPrefix + methodName);
 
-			//renderer.setSize( window.innerWidth, window.innerHeight );
-			renderer.setSize( renderWidth, renderHeight );
+		//renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.setSize( renderWidth, renderHeight );
 
-			//document.body.appendChild( renderer.domElement );
-            $screenContainer.append( renderer.domElement );
+		//document.body.appendChild( renderer.domElement );
+        $screenContainer.append( renderer.domElement );
 
-			//scene.add( cube );
-			createObject();
-			scene.add( some3DObject );
+		//scene.add( cube );
+		createObject();
+		scene.add( some3DObject );
 
-			camera.position.z = 5;
+		camera.position.z = 5;
 
-			render();        
+		//render(renderIncX,renderIncY);
+		render();
     }
-    
-    function createObject(){
-		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-		var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-		some3DObject = new THREE.Mesh( geometry, material );
-    }
-    
+
     function createView(){
         var methodName = "createView() ";
         console.log(logPrefix + methodName);
@@ -192,8 +206,18 @@ HackathonWeb.WebApp = function(){
         console.log("---" + argResult.cod);
         $(controlRefs.cityField).val("Not a city");
         if(argResult.cod===200){
-            console.log("---" + argResult.name);
+            console.log("---Name:" + argResult.name);
+            console.log("---Lat:" + argResult.coord.lat);
+            console.log("---Lon:" + argResult.coord.lon);
+            console.log("---renderIncX:" + renderIncX);
+            console.log("---renderIncY:" + renderIncY);
+            
+            renderIncX = argResult.coord.lat;
+            renderIncY = argResult.coord.lon;
+            
             $(controlRefs.cityField).val(argResult.name);
+            render();
+            //render(argResult.coord.lat,argResult.coord.lon);
         }
         
     }
